@@ -1,0 +1,14 @@
+[build]
+  publish = "frontend"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Permissions-Policy = "geolocation=(self)"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/(css|js|img)/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"

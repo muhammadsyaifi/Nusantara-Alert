@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: nusantara-alert
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: CACHE_TTL
+        value: "300"
+      - key: FIRMS_MAP_KEY
+        sync: false
