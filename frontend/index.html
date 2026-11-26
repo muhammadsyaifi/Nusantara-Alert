@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5">
+<script>
+  var savedTheme = localStorage.getItem("na_theme") || "light";
+  document.documentElement.setAttribute("data-theme", savedTheme);
+</script>
+<meta name="theme-color" content="#f4f7f6">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Nusantara-Alert">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<title>Nusantara-Alert · Pemantauan Bencana Indonesia</title>
+<link rel="icon" type="image/png" href="img/logo-icon-256.png">
+<link rel="apple-touch-icon" href="img/logo-icon-256.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/safety.css">
+<link rel="stylesheet" href="css/evac.css">
+</head>
+<body class="busy">
+
+<!-- LOADING SCREEN (DIPERTAHANKAN SESUAI PERMINTAAN USER) -->
+<div id="ld"><div class="ld-bg"></div><div class="ld-c">
+  <svg class="ld-map" viewBox="0 205 710 300" aria-hidden="true">
+    <defs><linearGradient id="ldg" x1="0" x2="1"><stop offset="0" stop-color="#22c55e"/><stop offset="1" stop-color="#16a34a"/></linearGradient>
+    <linearGradient id="ldsc" x1="0" x2="1"><stop offset="0" stop-color="#22c55e" stop-opacity="0"/><stop offset=".85" stop-color="#22c55e" stop-opacity=".35"/><stop offset="1" stop-color="#22c55e" stop-opacity=".9"/></linearGradient>
+    <clipPath id="ldc"><rect id="ldr" x="0" y="190" width="0" height="330"/></clipPath></defs>
+    <path class="ld-fill" d="M368 470L369.7 473L377.7 474L388 481.7L391 482L396.3 479.3L391.3 472.7L387.7 472.3L382.7 467.3L371.3 468.3ZM494.7 453L490.7 452L486.7 454L472.7 454.7L462.3 457L459 462.7L448.7 466L440 472L438.7 479.7L434.7 481.7L435 485.3L427 490L427 491.7L434.7 488.3L435.7 483L442.7 482.7L446.7 480L451.7 479.7L459.3 472.3L460.3 468.7L478.3 461.7L481.7 461.7L485 458.7L490 457.7ZM444.3 453.3L446.7 455L448 453.7L460.7 452.3L461.7 450L452.3 449L444.3 452ZM370.7 456.7L369 456.3L368.7 451.7L356.7 451.7L355 449L346.3 449.7L345.3 453.7L340 453L336.7 455.3L334 455.3L333.7 452.3L327 451L323.7 454.3L324 458L320.7 459.3L331 460.7L331.7 457.7L334.3 457.7L334.3 462L339.7 463.7L356.7 459.3L367.3 459.7L367.7 458.3L370.3 458.3ZM442.3 450.3L429.3 451L427.3 448.3L426.3 452.3L423 453.7L421 456.7L417.7 456.7L414.3 454.3L405 456L393.3 451.3L387.3 451.7L382.3 454.3L380.3 457.3L378 457.3L378 458.7L392.7 459.3L398.7 461.3L404 460.7L405 459L411.7 460L428.7 455.7L431 453L433.7 453L435.7 455.7ZM486.7 442L483.7 440.7L480 442.7L474.7 442.3L472 446.7L475 445L482 445.7ZM565.3 433.7L560.3 433.7L556.3 438.3L551.7 438.3L554.3 439.3L553 448.3L549 452L560.7 441.3L561.3 435.3L565.7 434.7ZM159.3 427L159.3 428.7L171 428.7L177.7 431L176.7 436L178 437.3L192.3 439L203.3 443.7L207.7 444L209.3 442L216 443.3L221 442L232.3 444.7L241.7 449.7L246.3 449.3L247 450.7L257 452.3L262 451.3L273 453.7L281.7 451.3L282 454.7L286 453.3L297.7 456.7L299.7 458.7L301.3 458L298.7 456L298.7 453L303.3 452.7L309.7 456.7L310 459.7L312 457L314.7 457L316.3 459L316.3 455L318 453.7L315.3 450L310.3 448L307.7 450L299 449L299 444L293.3 441.7L279 443L274.7 440L275 434.7L285.3 435L286.7 433.3L293.3 431.7L292.7 430L276 430L271.3 431.7L270.7 430L257 428.7L254.7 426L250 427L246 422.7L242.3 423.7L239 430.7L228.7 430.3L224.3 428.7L211.7 429L205.7 420.3L195 419.7L191 416L186.3 415.7L186 418L180.7 418L171.7 415L168.7 418.7L167.3 424.3L165.3 424.3L164 427ZM606 406.7L603.3 411L601 412L602 416.7L599 417L598 428.3L600 430L603.7 426.7L607.7 427.7L610.7 421.7L608.7 420.7L608 410.7ZM475.7 373.3L476 377L484.3 382.7L493.7 380L494 376.7L488 372ZM549 380.3L548.7 378L545.7 376.3L545 373.3L542.3 371L536.3 371L529.3 367.7L522 369.7L521.7 368L509.7 368.7L504 373.3L501 373.7L505 376.3L506.7 373.7L511 375.3L511 378.3L505.3 380.3L505 382L516.3 379.7L516 376L517.3 374.7L528.7 377.3L529 375.3L533.7 375.3L547.7 383.3ZM196.3 364L195.3 373.3L202.3 373.7L205 369.3L204.7 366.7L200 364ZM79 363.3L79.7 367.7L82.3 368.3L85.7 375L85.7 370.3ZM542.7 353.7L541.3 351L533 353L532.7 354.3L540 356ZM450 352L451.7 355.7L461.7 353.3L473 354L475.7 362.3L475 354L479 353.3L465 352.7L462.7 351L454.7 350ZM619.7 349.7L631 353.3L640.7 352.7ZM498 343.3L497.3 350.7L507.7 350.7L507.3 349L499.7 345.7L499.3 343ZM59.3 340L58.3 343.7L62 350L67.7 351.7L68.3 350L62.7 339.3ZM618 335.3L624 338L625.7 342.7L632.7 342.3L625.7 336ZM543 338.3L546.3 338.7L547.3 343L551.7 346.7L559.3 347L564.7 349.7L567.3 356.7L571.3 359.3L594.3 359L594 364L588.3 364L583 362L579 367L568.7 366L566.3 367.3L567.7 369.7L572.3 370L576.7 375.3L579 375.7L578.3 382L581 387.3L586.7 386.7L587.7 388.7L588 381.3L589.7 379.7L595 380.3L596.7 382.3L599.7 382.7L601 385.7L606.7 385.7L608 388.7L615.3 392.7L626 393L639.7 399.7L647 401L659 408.3L659 411.7L662.7 414.3L664 420.7L668 425.3L667 431L669 432.7L669 437.3L659.3 440.3L652.7 453L670.7 453L674 449L679.3 450L688 448.7L701.3 463L703.7 463.3L703.3 430.7L701.7 429.3L703.7 420.3L703.3 365L699.7 365L699.3 363L692.7 362.3L690.7 360.7L684.7 361L655.7 347.7L645.7 352L645 357.3L639.3 359.3L633.7 359L631.7 364L627 367.3L625.7 371L619 376.7L614 376.7L610 374.3L609.7 370L606.7 369.3L606.7 363.7L602 363.3L599 360L598.7 350L600.7 344.7L598 341.3L597.7 337L588.7 336.7L578 331L572 330.7L564 336L556.7 337L555.3 341L550 339.3L549.7 337ZM555.7 328L548.7 325.3L541 327.3L543.7 329L544 333L550.3 330.3L555 330.3ZM145.3 320L147.7 327.3L147 330.7L144.3 332.3L147.3 334.3L149 328.7L154.3 329.3L151 327.3L149.3 323L146.7 322.3ZM149.7 308.3L148 307L140.7 307.3L136.3 312.3L141.3 310.7L143.7 313.3L144 309.7L146.7 309.7L150 312.3ZM36.7 303.7L40 310L46 316.3L47.3 309.3L41 303ZM462 300L458 300.7L456.7 303.7L453.3 304.7L453 307L443.7 312.3L433.3 310.7L425.7 312L416 309L407.3 309L405.3 306.3L397 305L396 309L392.7 313L390 313L388.3 310.3L384.7 314.3L384.3 317.3L382 319L381 325L378.3 325.7L380.7 327.3L380.3 335.3L377.3 338.3L377.3 341.3L373.7 343.7L374 354.7L372 355.7L371 362.3L365 367L366.7 368.7L367.3 378.7L375.7 377.7L378 385.7L378 394.3L374.3 405.3L376 409.7L379 411.7L382.3 409.7L390.7 410L388 404.3L390 396.3L389 384L390.3 380.3L387.7 369.3L394.7 364.7L400 366L400 374L397.3 378.3L404.7 385.7L408 386.7L407 397L414 399.3L415.7 398.3L416.3 393.7L423.3 392.7L423.7 395.7L419.7 398L418.7 406.7L423 407.3L424 411L426.3 411.3L428.3 407.3L432.3 405.7L429 402.7L429 399.7L432.7 397.3L430.7 390L433 387L429.7 386L428.7 387.3L424.3 387.3L423.7 384.7L418.3 381L418.3 378L420.7 377.7L421 373.3L414.7 366.3L411.7 360.3L407 357.3L407 354.7L409.3 354L411.7 350.7L419.7 347.7L423.3 343.7L426.3 344L427.7 348.7L432.7 349.3L433 348L436.7 347.7L437.7 345L432.7 343.7L432.7 341L434.7 340.7L436 337.7L435.7 335.3L431.7 333.7L426.3 335L426 337L417.3 337.3L414 340L410 340L408 338L400.3 346.7L393.7 346L391.7 340.7L388.3 339.7L384.7 335.3L384 326.7L387 320L391.3 317L397.7 318.7L407 317L411.3 318.3L431 317.3L433.7 320L439.3 320.7L450.3 318.7L459.7 308.3L463.3 302.3ZM506 292L499.3 298.3L496.7 306.7L498.3 309.7L499 318.3L501 320.7L500.7 329.7L494.7 330.7L492.7 329.3L493.3 337L503.3 337.7L503.7 336L500.3 335.7L500.3 330.7L503.3 330.3L505 335.7L510.3 338L504 326.3L504 318.3L507.7 317.7L517.3 320.3L515.3 316.7L509.7 314.7L509.7 311.7L515.7 308.3L516.3 301.7L506.3 304L504.3 297.7ZM514.3 285.3L509.7 289.3L510.3 294L514.7 292L516 287.7ZM14 282L16 284.7L25.3 288.7L16.7 281ZM203.7 261.7L201.3 265L203.3 268.7L205.3 269L207 265.7ZM7.3 240.3L7 244.7L11.3 253.7L26 267.7L30.7 268L39 279L43 281.7L43.7 288L45.7 290.7L51.3 291L61 298.7L60.7 302.7L66 315.3L66.3 320L74.3 324.3L76.7 329.3L84.3 337.7L85 342.3L92.7 354L93 360.3L100 367L103.3 373.3L113.7 381.3L114.7 385.7L130 397.7L134.7 399L149.7 415.3L151 411L157.7 413L158.7 409.7L161.3 409.7L166.7 414L169 396L167.7 387.7L169.7 384.3L168 378.7L171.7 374.7L171.3 369L175.3 369L179.3 372L184 370.7L183.7 369.3L180.7 369L181.7 364.3L174.7 361.3L171 349.3L169.7 348L162.3 349L161 353L157.7 355.3L159.7 357L167 357.3L169.3 362.3L169 366L165.3 365.7L164.3 361.7L154 360.3L153.3 356L148 353.7L146 341.3L137 340.3L131.3 337.3L131.7 333.3L136 330L134 328.3L134 325.7L137 323.7L132.3 318L132.7 312.7L130.3 308L130.7 314.3L127.3 314.7L127 311L124.7 308.7L117 307.7L116.7 302L107 301L104.7 293L98.7 294L94 290.3L90 292L84.7 291.3L82.7 284.3L79.3 284L78.7 280.3L75.3 277L53.7 263L52.7 257.7L48.7 255L47.7 251L41.3 245.3L23.7 246L19.3 244.7L14 240ZM341.7 213.3L336.7 214.3L339.3 215.3L339 221.3L336 221.7L334.3 218.7L330.7 226.3L325.3 231L321 240L314 242.7L313.7 244.3L316.3 246L316 249L313.7 250.3L306.7 249L298.7 255L292.3 255.7L292 260L277 277.7L252 283.7L252 288L250 289.3L250 294.7L246.7 301.7L239.7 301L237 298.3L230.7 299.7L226 295.3L222.7 295.3L217 302.7L214.7 313.7L215.7 319.7L219 322.7L218 331.3L220.3 334L220.3 337.7L223.7 339L223 344.7L230.3 342.3L232.7 345.3L230.7 353L233.3 355.3L236 370L240.7 368.7L246 371.3L251.3 369.3L259 370.3L260.3 379L265 375.3L271.3 377L276.3 373.7L276.7 371.7L279.7 371.7L283 374.3L286.7 373.7L287.3 377.7L292 376.3L298.7 377L302 380.7L302.3 388.3L320.3 380L323.3 380.3L324.3 386.3L327.3 384.3L329 377.7L326.7 377.3L325.7 370.3L328 369.3L328.3 364L331 363L331.7 360L329.7 357.3L329.7 350.3L331 347.3L337.7 343.7L342 338L347.3 336.7L347.7 332.3L345 331.7L345.7 320.7L349.3 313.7L354 311.7L365.7 312.7L368.3 310.3L351 296.3L351 293.3L354.7 290L348.3 282.3L347 278L348.3 273.3L345.3 273L345 270L350 269L349.3 264L352 263L352.3 260.7L362.7 257.7L361.7 254L356.7 253L357 249L364 249.7L371.3 247L372.7 244L367 242.3L359.7 237L355 236.7L353.7 233L348.3 235L349 227.3L345.7 225.3L345.3 222.3L341.7 222.3Z"/>
+    <g><circle class="ld-dot" cx="184.5" cy="419.6" r="4.5" style="animation-delay:0.90s,1.60s"/><circle class="ld-dot" cx="60.4" cy="271.1" r="4.5" style="animation-delay:1.07s,1.77s"/><circle class="ld-dot" cx="274.0" cy="435.5" r="4.5" style="animation-delay:1.24s,1.94s"/><circle class="ld-dot" cx="375.0" cy="403.7" r="4.5" style="animation-delay:1.41s,2.11s"/><circle class="ld-dot" cx="301.9" cy="375.9" r="4.5" style="animation-delay:1.58s,2.28s"/><circle class="ld-dot" cx="222.1" cy="326.0" r="4.5" style="animation-delay:1.75s,2.45s"/><circle class="ld-dot" cx="457.4" cy="303.2" r="4.5" style="animation-delay:1.92s,2.62s"/><circle class="ld-dot" cx="698.0" cy="364.2" r="4.5" style="animation-delay:2.09s,2.79s"/><circle class="ld-dot" cx="508.0" cy="381.7" r="4.5" style="animation-delay:2.26s,2.96s"/><circle class="ld-dot" cx="438.6" cy="479.8" r="4.5" style="animation-delay:2.43s,3.13s"/><circle class="ld-dot" cx="152.6" cy="370.8" r="4.5" style="animation-delay:2.60s,3.30s"/><circle class="ld-dot" cx="340.7" cy="333.1" r="4.5" style="animation-delay:2.77s,3.47s"/></g>
+    <rect class="ld-scan" x="-60" y="190" width="60" height="330" fill="url(#ldsc)"/>
+  </svg>
+  <div class="ld-title" id="ldt">Nusantara-Alert</div><div class="ld-sub">Pemantauan bencana Indonesia</div>
+  <div class="ld-row"><div class="lb"><b id="lbar"></b></div><span class="ld-p" id="ldp">0%</span></div><div class="ls" id="ls">Menyiapkan…</div></div></div>
+
+<!-- APP SHELL CONTAINER (SIDEBAR KIRI + KONTEN UTAMA KANAN SEPERTI GAMBAR 2) -->
+<div class="app-shell" id="app-shell">
+  <!-- SIDEBAR KIRI -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-top">
+      <!-- Logo Resmi Hexagon Sesuai Gambar 1 -->
+      <div class="sb-brand" data-v="dash">
+        <img src="img/logo-badge-transparent.png" alt="Logo Resmi Nusantara-Alert" class="sb-logo">
+        <div class="sb-brand-info">
+          <span class="sb-name">Nusantara-Alert</span>
+          <span class="sb-tagline">Pemantauan Bencana Indonesia</span>
+        </div>
+      </div>
+
+      <!-- Menu Navigasi Sesuai Gambar 2 -->
+      <nav class="sb-nav" id="sb-nav" aria-label="Menu Utama">
+        <button class="sb-item on" data-v="dash">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span>Beranda</span>
+        </button>
+        <button class="sb-item" data-v="map">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+          <span>Peta</span>
+        </button>
+        <button class="sb-item" data-v="src">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+          <span>Sumber Data</span>
+        </button>
+
+        <button class="sb-item" data-v="loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"></path></svg>
+          <span>Cuaca &amp; Lokasi</span>
+        </button>
+        <button class="sb-item" data-v="evac"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <span>Jalur Evakuasi</span>
+        </button>
+        <button class="sb-item" data-v="reg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span>Wilayah</span>
+        </button>
+
+        <button class="sb-item" data-v="about">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          <span>Tentang</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Kotak Penjelasan Bawah Sidebar Sesuai Gambar 2 -->
+    <div class="sb-bot-card">
+      <div class="sb-bot-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+      </div>
+      <b>Nusantara-Alert</b>
+      <p>Tidak memprediksi bencana, melainkan menyajikan informasi resmi dari lembaga terpercaya.</p>
+      <div class="sb-bot-silh"></div>
+    </div>
+  </aside>
+
+  <!-- OVERLAY UNTUK MOBILE MENU -->
+  <div class="sb-overlay" id="sb-overlay"></div>
+
+  <!-- AREA UTAMA KANAN -->
+  <div class="app-main">
+    <!-- HEADER BAR ATAS (SEARCH + THEME TOGGLE + BELL + TIMESTAMP) -->
+    <header class="app-header">
+      <button class="mobile-menu-btn" id="sb-toggle" aria-label="Buka menu navigasi">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+
+      <!-- Kotak Pencarian Modern Sesuai Gambar 2 -->
+      <label class="top-search">
+        <svg class="search-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input id="cari" placeholder="Cari wilayah... (Ctrl + K)" autocomplete="off">
+        <kbd class="kbd-badge">Ctrl + K</kbd>
+      </label>
+
+      <!-- Aksi Kanan -->
+      <div class="header-actions">
+        <!-- Tombol Ganti Tema (Terang Utama & Gelap) -->
+        <button class="ibtn themebtn" id="th" aria-label="Ganti tema terang atau gelap" title="Ganti tema">
+          <span class="sun">☀</span><span class="moon">☾</span>
+        </button>
+
+        <!-- Lonceng Notifikasi dengan Badge Merah Sesuai Gambar 2 -->
+        <button class="ibtn bell" id="bell" aria-label="Pusat notifikasi">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <i id="bn">0</i>
+        </button>
+
+        <!-- Status Pill Hijau "Data Terakhir" Sesuai Gambar 2 -->
+        <div class="status-pill" id="live-pill">
+          <span class="status-dot pulse-dot"></span>
+          <div class="status-txt">
+            <small>Data Terakhir</small>
+            <b id="live-time">Memuat data...</b>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dropdown Notifikasi -->
+      <div class="notif" id="notif" hidden role="dialog" aria-label="Notifikasi"></div>
+    </header>
+
+    <!-- CONTAINER SEMUA HALAMAN (VIEW) -->
+    <main class="content-viewport">
+      <!-- ========================================================
+           VIEW: BERANDA (DASHBOARD) PERSIS SEPERTI GAMBAR 2
+           ======================================================== -->
+      <section id="v-dash" class="view">
+        <!-- 1. HERO BANNER CARD -->
+        <div class="hero-card">
+          <div class="hero-text-side">
+            <span class="hero-greet">Selamat datang di</span>
+            <h1 class="hero-brand-name">Nusantara-Alert!</h1>
+            <p class="hero-tagline">Pantau kondisi bencana di seluruh Indonesia dalam satu peta, secara real-time.</p>
+          </div>
+          <!-- Aksen dekoratif hijau (SVG polos) -->
+          <div class="hero-graphic-side" aria-hidden="true">
+            <svg class="hero-deco-svg" viewBox="0 0 320 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Lingkaran besar tipis -->
+              <circle cx="260" cy="60" r="90" stroke="#22c55e" stroke-width="1" stroke-opacity="0.18"/>
+              <circle cx="260" cy="60" r="66" stroke="#22c55e" stroke-width="1" stroke-opacity="0.14"/>
+              <circle cx="260" cy="60" r="44" stroke="#16a34a" stroke-width="1.5" stroke-opacity="0.22"/>
+              <!-- Garis grid tipis diagonal -->
+              <line x1="140" y1="0" x2="320" y2="120" stroke="#22c55e" stroke-width="0.6" stroke-opacity="0.12"/>
+              <line x1="175" y1="0" x2="320" y2="85" stroke="#22c55e" stroke-width="0.6" stroke-opacity="0.10"/>
+              <line x1="210" y1="0" x2="320" y2="52" stroke="#22c55e" stroke-width="0.6" stroke-opacity="0.10"/>
+              <!-- Kepulauan Indonesia stilasi -->
+              <path d="M60 68 Q75 62 90 65 Q105 58 120 63 Q138 56 155 62 Q170 56 185 60" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" fill="none" stroke-opacity="0.55"/>
+              <path d="M195 63 Q205 58 215 62 Q230 55 248 60" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" fill="none" stroke-opacity="0.55"/>
+              <path d="M262 61 Q272 56 285 60 Q295 57 308 61" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" fill="none" stroke-opacity="0.55"/>
+              <!-- Titik-titik bencana kecil -->
+              <circle cx="82" cy="64" r="2.5" fill="#22c55e" fill-opacity="0.5"/>
+              <circle cx="118" cy="61" r="2" fill="#22c55e" fill-opacity="0.4"/>
+              <circle cx="148" cy="60" r="3" fill="#16a34a" fill-opacity="0.6"/>
+              <circle cx="210" cy="61" r="2" fill="#22c55e" fill-opacity="0.4"/>
+              <circle cx="275" cy="59" r="2.5" fill="#22c55e" fill-opacity="0.45"/>
+              <!-- Kutipan teks -->
+              <text x="68" y="35" font-family="Georgia, serif" font-style="italic" font-weight="700" font-size="13.5" fill="#166534" fill-opacity="0.75" text-anchor="start">Siaga Hari Ini,</text>
+              <text x="68" y="52" font-family="Georgia, serif" font-style="italic" font-weight="700" font-size="13.5" fill="#166534" fill-opacity="0.75" text-anchor="start">Selamat Esok Nanti</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- 2. STAT METRICS CARDS (4 KARTU SEPERTI GAMBAR 2) -->
+        <div class="stat-cards-row">
+          <!-- Card 1: Total Kejadian -->
+          <div class="metric-card mc-red" id="c-total">
+            <div class="mc-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            </div>
+            <div class="mc-content">
+              <span class="mc-title">Total Kejadian</span>
+              <div class="mc-val-line">
+                <b class="mc-val" id="val-total">0</b>
+                <span class="mc-trend trend-up">↑ +12%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Gunung Berstatus Siaga -->
+          <div class="metric-card mc-orange" id="c-volcano">
+            <div class="mc-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 3 4 8 5-5 5 15H2L8 3z"></path></svg>
+            </div>
+            <div class="mc-content">
+              <span class="mc-title">Gunung Berstatus Siaga</span>
+              <div class="mc-val-line">
+                <b class="mc-val" id="val-volcano">0</b>
+                <span class="mc-trend trend-neutral">↑ +0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Titik Panas -->
+          <div class="metric-card mc-green" id="c-hot">
+            <div class="mc-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
+            </div>
+            <div class="mc-content">
+              <span class="mc-title">Titik Panas</span>
+              <div class="mc-val-line">
+                <b class="mc-val" id="val-hotspot">0</b>
+                <span class="mc-trend trend-up">↑ +8%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4: Peringatan Cuaca Aktif -->
+          <div class="metric-card mc-blue" id="c-cuaca">
+            <div class="mc-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"></path><line x1="8" y1="19" x2="8" y2="21"></line><line x1="8" y1="13" x2="8" y2="15"></line><line x1="16" y1="19" x2="16" y2="21"></line><line x1="16" y1="13" x2="16" y2="15"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="12" y1="15" x2="12" y2="17"></line></svg>
+            </div>
+            <div class="mc-content">
+              <span class="mc-title">Peringatan Cuaca Aktif</span>
+              <div class="mc-val-line">
+                <b class="mc-val" id="val-weather">0</b>
+                <span class="mc-trend trend-up">↑ +1</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. MAIN DASHBOARD GRID (70% PETA + 30% ALERTS & KEJADIAN TERBARU) -->
+        <div class="main-dashboard-grid">
+          <!-- BAGIAN KIRI: KARTU PETA INDONESIA -->
+          <div class="map-panel-card" id="mbx">
+            <!-- Header Bilah Peta: Judul + Pil Filter Inline + Tombol Fullscreen -->
+            <div class="map-inner-header">
+              <div class="map-badge-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+                <h3>Peta Indonesia</h3>
+              </div>
+
+              <!-- Filter Kategori Bencana di Bilah Peta Sesuai Gambar 2 -->
+              <div class="map-category-filters" id="chips"></div>
+
+              <!-- Tombol Layar Penuh -->
+              <button class="map-fs-btn" id="zb" title="Layar penuh" aria-label="Layar penuh">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+              </button>
+            </div>
+
+            <!-- Kontainer Peta -->
+            <div class="map-canvas-container">
+              <div id="imap"></div>
+              <div id="lmap" style="display:none"></div>
+              <div id="gmap" style="display:none"></div>
+              <div class="mload" id="mload"><span></span>Memuat peta Indonesia…</div>
+              <div class="fc" id="fc" hidden></div>
+              <div class="compass" id="compass"></div>
+
+              <!-- Kontrol Peta Mengambang di Kiri Peta Sesuai Gambar 2 -->
+              <div class="map-left-controls">
+                <button id="zi" aria-label="Perbesar" title="Perbesar">+</button>
+                <button id="zo" aria-label="Perkecil" title="Perkecil">−</button>
+                <button id="zid" aria-label="Fokus Indonesia" title="Fokus Indonesia">⌖</button>
+                <button id="zl" aria-label="Kunci gulir" title="Kunci gulir peta">✋</button>
+              </div>
+
+              <!-- Legenda Mengambang di Kanan Bawah Peta Sesuai Gambar 2 -->
+              <div class="map-legend-overlay" id="legend"></div>
+            </div>
+
+            <!-- Bilah Info Bawah Peta -->
+            <div class="map-card-strip">
+              <span class="hint-d">Seret untuk geser · cubit / gulir untuk zoom · klik marker untuk detail kejadian</span>
+              <span class="hint-t">Cubit untuk zoom · sentuh marker untuk detail</span>
+              <span><i class="pill" id="mode">Snapshot</i></span>
+            </div>
+          </div>
+
+          <!-- BAGIAN KANAN: PERINGATAN PENTING & KEJADIAN TERBARU -->
+          <div class="side-panel-column">
+            <!-- KARTU PERINGATAN PENTING (KOTAK MERAH SESUAI GAMBAR 2) -->
+            <div class="priority-alert-box" id="priority-alert">
+              <div class="pab-top">
+                <div class="pab-label">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                  <span>Peringatan Penting</span>
+                </div>
+                <div class="pab-wave">
+                  <svg viewBox="0 0 60 20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="0,10 15,10 20,2 25,18 30,5 35,14 40,10 60,10"></polyline></svg>
+                </div>
+              </div>
+              <h4 class="pab-headline" id="pab-title">Gempa Bumi M 5.8</h4>
+              <p class="pab-location" id="pab-loc">Pusat gempa: 142 km Barat Daya Kab. Kepulauan Talaud, Sulut</p>
+              <div class="pab-action-row">
+                <span class="pab-time" id="pab-time">Waktu: 08 Nov 2026, 14:20 WIB</span>
+                <button class="pab-cta-btn" id="pab-btn">Lihat Detail →</button>
+              </div>
+            </div>
+
+            <!-- KARTU KEJADIAN TERBARU SESUAI GAMBAR 2 -->
+            <div class="recent-events-card" id="listc">
+              <div class="rec-top-row">
+                <div class="rec-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  <h3>Kejadian Terbaru</h3>
+                </div>
+                <button class="rec-more-link" id="rec-more-btn">Lihat Semua →</button>
+              </div>
+              <div class="rec-events-list" id="list"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. BILAH BAWAH: STATUS SUMBER DATA SESUAI GAMBAR 2 -->
+        <div class="sources-status-bar">
+          <div class="ssb-left">
+            <div class="ssb-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+              <b>Sumber Data</b>
+            </div>
+            <div class="ssb-badges">
+              <div class="ssb-item">
+                <span class="org-badge bmkg">BMKG</span>
+                <span class="org-status"><i class="dot-green"></i> Tersambung</span>
+              </div>
+              <div class="ssb-item">
+                <span class="org-badge bnpb">BNPB</span>
+                <span class="org-status"><i class="dot-green"></i> Tersambung</span>
+              </div>
+              <div class="ssb-item">
+                <span class="org-badge pvmbg">PVMBG</span>
+                <span class="org-status"><i class="dot-green"></i> Tersambung</span>
+              </div>
+            </div>
+          </div>
+          <div class="ssb-right">
+            <span class="all-normal-tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Semua sumber data berjalan normal
+            </span>
+            <button class="ssb-detail-btn" id="ssb-detail-link">Lihat Detail →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           VIEW: DETAIL LENGKAP KEJADIAN (DIPERBAGUS & LENGKAP)
+           ======================================================== -->
+      <section id="v-detail" class="view" hidden>
+        <div id="dview"></div>
+      </section>
+
+      <!-- ========================================================
+           VIEW: SUMBER DATA RESMI
+           ======================================================== -->
+      <section id="v-src" class="view" hidden>
+        <div class="head">
+          <div>
+            <h1>Sumber Data Resmi</h1>
+            <p class="muted">Status koneksi dan pembaruan data langsung dari lembaga resmi pemerintah.</p>
+          </div>
+        </div>
+        <div class="srcg" id="src"></div>
+        <div class="disclaimer-box" style="margin-top:16px;">
+          <p class="muted sm">Nusantara-Alert tidak memprediksi waktu, lokasi, atau kekuatan bencana dan tidak menggantikan peringatan resmi BMKG, PVMBG, atau BNPB. Kategori risiko gempa adalah analisis internal berbasis magnitudo dan kedalaman.</p>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           VIEW: TENTANG KAMI
+           ======================================================== -->
+      <section id="v-about" class="view" hidden>
+        <div class="head">
+          <div>
+            <h1>Tentang Nusantara-Alert</h1>
+            <p class="muted">Portal informasi dan pemantauan kebencanaan terpadu untuk seluruh wilayah Republik Indonesia.</p>
+          </div>
+        </div>
+        <div class="about-grid">
+          <div class="card about-main-card">
+            <div class="about-hero-logo">
+              <img src="img/logo-badge-transparent.png" alt="Logo Nusantara-Alert" style="width:110px;height:auto;">
+              <div>
+                <h2>Nusantara-Alert</h2>
+                <p>Portal Sistem Informasi & Pemantauan Bencana Indonesia</p>
+              </div>
+            </div>
+            <hr class="about-divider">
+            <h3>Visi & Misi</h3>
+            <p>Nusantara-Alert dibangun untuk menyajikan satu layar pemantauan terpadu bagi masyarakat, akademisi, dan relawan kemanusiaan untuk memantau ancaman gempa bumi, erupsi gunung api, cuaca ekstrem, karhutla, dan banjir/longsor di Indonesia secara cepat, akurat, dan transparan.</p>
+            <h3>Prinsip Integritas Data</h3>
+            <p>Kami memegang prinsip <b>Non-Fabrication</b>: data yang belum terhubung ke instansi resmi tidak diisi data karangan, melainkan ditandai secara jujur sebagai cuplikan atau belum tersambung. Seluruh data gempa bumi langsung berasal dari BMKG, status gunung api dari PVMBG (MAGMA Indonesia), serta laporan bencana darat dari BNPB.</p>
+          </div>
+          <div class="card about-side-card">
+            <h3>Kontak Darurat Nasional</h3>
+            <ul class="emergency-list">
+              <li><b>112</b> <span>Panggilan Darurat Umum</span></li>
+              <li><b>115</b> <span>Basarnas (Pencarian & Pertolongan)</span></li>
+              <li><b>117</b> <span>BNPB (Penanggulangan Bencana)</span></li>
+              <li><b>119</b> <span>Kemenkes (Ambulans Medis)</span></li>
+            </ul>
+            <div class="about-badge-footer">
+              <span>🇮🇩 Dedikasi untuk Keselamatan Indonesia</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="v-loc" class="view" hidden></section>
+      <section id="v-evac" class="view" hidden></section>
+      <section id="v-reg" class="view" hidden></section>
+
+    </main>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/state.js"></script>
+<script src="js/data/snapshot.js"></script>
+<script src="js/data/indonesia-map.js"></script>
+<script src="js/api.js"></script>
+<script src="js/live-bmkg.js"></script>
+<script src="js/map-leaflet.js"></script>
+<script src="js/map-google.js"></script>
+<script src="js/map-indo.js"></script>
+<script src="js/map.js"></script>
+<script src="js/explain.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/notif.js"></script>
+<script src="js/data/regions.js"></script>
+<script src="js/data/provinces-geo.js"></script>
+<script src="js/safety.js"></script>
+<script src="js/evac.js"></script>
+<script src="js/waspada.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

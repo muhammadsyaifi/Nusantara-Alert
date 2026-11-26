@@ -1,0 +1,61 @@
+/* Peta Jalur Evakuasi (js/evac.js) */
+.ex-banner{padding:16px 18px;margin-bottom:16px}
+.ex-banner.hot{border-color:var(--red-border);background:var(--red-soft)}
+.ex-banner b{font-size:15px}.ex-banner p{margin:4px 0 0;font-size:13px;color:var(--muted)}
+.ex-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.ex-chip{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:99px;border:1px solid var(--line-bold);background:var(--card-bg);color:var(--ink);font:inherit;font-size:12px;font-weight:600;cursor:pointer}
+.ex-chip i,.ex-it i{width:10px;height:10px;border-radius:50%;flex:none;display:inline-block}
+.ex-chip:hover{border-color:var(--primary)}
+
+.ex-grid{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(280px,1fr);gap:16px;margin-bottom:16px;align-items:start}
+.ex-card{padding:0;overflow:hidden;display:flex;flex-direction:column}
+.ex-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:12px}
+.ex-chk{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-secondary);cursor:pointer}
+.ex-mapwrap{position:relative}
+.ex-map{height:min(68vh,600px);height:min(68dvh,600px);touch-action:pan-x pan-y;outline:0}
+.ex-map.leaflet-container,.ex-map{background:#d9eef2}
+:root[data-theme="dark"] .ex-map.leaflet-container,:root[data-theme="dark"] .ex-map{background:#12222b}
+.ex-map .leaflet-attribution-flag{display:none!important}
+.ex-map .leaflet-control-attribution{font-size:10px}
+/* bayangan jatuh seperti peta referensi */
+.leaflet-prov-pane{filter:drop-shadow(3px 5px 4px rgba(15,23,42,.35))}
+.ex-map .leaflet-prov-pane path{transition:fill .35s,fill-opacity .25s;cursor:pointer}
+.ex-lbl{pointer-events:none}
+.ex-lbl span{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;font-size:10.5px;font-weight:700;color:#111;text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 2px #fff;display:inline-flex;align-items:center;gap:4px}
+.ex-lbl.sel span{font-size:12px}
+.ex-lbl span i{width:9px;height:9px;border-radius:50%;border:1.5px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.35)}
+.ex-tip{font-size:12px;line-height:1.35}
+.ex-leg{display:flex;flex-wrap:wrap;gap:6px 14px;padding:10px 14px;font-size:12px;color:var(--ink-secondary);border-top:1px solid var(--line)}
+.ex-leg span{display:inline-flex;align-items:center;gap:6px}
+.ex-leg i{display:inline-block;width:12px;height:12px;border-radius:3px}
+.ex-leg i.ln{width:22px;height:0;border-radius:0;background:none!important}
+.ex-leg i.dt{border-radius:50%}
+
+.ex-card.exfs{position:fixed;inset:0;z-index:200;border-radius:0;padding-top:env(safe-area-inset-top)}
+.ex-card.exfs .ex-mapwrap{flex:1}.ex-card.exfs .ex-map{height:100%}
+
+.ex-side{padding:16px;max-height:min(80vh,760px);overflow:auto}
+.ex-side h4{margin:0 0 8px}.ex-side h5{margin:14px 0 6px;font-size:13px}
+.ex-ph{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.ex-ph h4{margin:0}
+.ex-bd{padding:3px 10px;border-radius:99px;font-size:12px;font-weight:700;color:#111}
+.ex-items{display:flex;flex-direction:column;gap:6px;margin:8px 0}
+.ex-it{display:flex;gap:10px;align-items:flex-start;text-align:left;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--card-subtle);color:var(--ink);font:inherit;cursor:pointer}
+.ex-it i{margin-top:4px}.ex-it:hover{border-color:var(--primary)}
+.ex-it b{display:block;font-size:13px}.ex-it small{color:var(--muted);font-size:12px}
+.ex-acts{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.ex-tip2{padding:8px 10px;border-left:3px solid var(--primary);background:var(--card-subtle);border-radius:6px;margin-bottom:6px}
+.ex-tip2 b{font-size:13px}.ex-tip2 p{margin:2px 0 0;font-size:12.5px;color:var(--ink-secondary)}
+.ex-stale{border-top:1px dashed var(--line);padding-top:8px}
+.ex-src{padding:18px;margin-bottom:16px}.ex-src h4{margin:0 0 6px}
+
+@media(max-width:860px){
+  .ex-grid{grid-template-columns:1fr}
+  .ex-map{height:min(62vh,480px);height:min(62dvh,480px)}
+  .ex-bar .btn{flex:1 1 140px}.ex-bar .seg{flex:1 1 100%}.ex-bar .seg button{flex:1}
+  .ex-side{max-height:none}
+}
+@media(prefers-reduced-motion:reduce){.ex-map .leaflet-prov-pane path{transition:none}}
+
+.ex-bar select{padding:8px 10px;border:1px solid var(--line-bold);border-radius:10px;background:var(--card-bg);color:var(--ink);font:inherit;font-size:13px;max-width:100%}
+.ex-bnn{padding:0 14px 10px;margin:0;color:var(--red)}.ex-bnn:empty{display:none}
